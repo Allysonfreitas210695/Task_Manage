@@ -1,8 +1,11 @@
+import Button from "./Button"
+
 import CheckIcon from "../assets/icons/check.svg?react"
 import LoaderIcon from "../assets/icons/loader.svg?react"
 import DetailsIcon from "../assets/icons/details.svg?react"
+import TrashIcon from "../assets/icons/trash.svg?react"
 
-const TaskItem = ({ task, handleTaskStatusChange }) => {
+const TaskItem = ({ task, handleStatusChange, handleRemoveClick }) => {
   const variantTaskColor = {
     done: "bg-[#00ADB5]/10 text-[#00ADB5]",
     in_progress: "bg-[#FFAA04]/10 text-[#FFAA04]",
@@ -23,7 +26,7 @@ const TaskItem = ({ task, handleTaskStatusChange }) => {
             id={`time-${task.id}`}
             className="absolute h-full w-full cursor-pointer opacity-0"
             checked={task.status === "done"}
-            onChange={() => handleTaskStatusChange(task.id)}
+            onChange={() => handleStatusChange(task.id)}
           />
           {task.status === "done" && <CheckIcon />}
           {task.status === "in_progress" && (
@@ -32,9 +35,15 @@ const TaskItem = ({ task, handleTaskStatusChange }) => {
         </label>
         {task.title}
       </div>
-      <a href="#" className="transition-colors hover:opacity-75">
-        <DetailsIcon />
-      </a>
+
+      <div className="flex items-center gap-2">
+        <Button variant="ghost" onClick={() => handleRemoveClick(task.id)}>
+          <TrashIcon className={"text-[#9A9C9F]"} />
+        </Button>
+        <a href="#" className="transition-colors hover:opacity-75">
+          <DetailsIcon />
+        </a>
+      </div>
     </div>
   )
 }

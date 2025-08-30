@@ -11,6 +11,7 @@ import SunIcon from "../assets/icons/sun.svg?react"
 import MoonIcon from "../assets/icons/moon.svg?react"
 import CloudIcon from "../assets/icons/cloud-sun.svg?react"
 import TaskItem from "./TaskItem"
+import { toast } from "sonner"
 
 const Tasks = () => {
   const [tasks, setTasks] = useState(TASKS)
@@ -25,12 +26,26 @@ const Tasks = () => {
         if (task.id !== taskId) return task
 
         let newStatus = "not_started"
-        if (task.status === "not_started") newStatus = "in_progress"
-        else if (task.status === "in_progress") newStatus = "done"
+        if (task.status === "not_started") {
+          toast.success("Tarefa iniciada!")
+          newStatus = "in_progress"
+        } else if (task.status === "in_progress") {
+          toast.success("Tarefa concluída!")
+          newStatus = "done"
+        }
 
         return { ...task, status: newStatus }
       })
     )
+  }
+
+  function handleClearTasks() {
+    setTasks([])
+  }
+
+  function handleRemoveTask(taskId) {
+    setTasks((prevTasks) => prevTasks.filter((task) => task.id !== taskId))
+    toast.success("Tarefa removida com sucesso!")
   }
 
   return (
@@ -44,7 +59,7 @@ const Tasks = () => {
         </div>
 
         <div className="flex items-center gap-3">
-          <Button text="Nova Tarefa" variant="ghost">
+          <Button text="Nova Tarefa" variant="ghost" onClick={handleClearTasks}>
             <TrashIcon />
             Limpar Tarefas
           </Button>
@@ -63,7 +78,8 @@ const Tasks = () => {
             <TaskItem
               key={task.id}
               task={task}
-              handleTaskStatusChange={handleTaskStatusChange}
+              handleStatusChange={handleTaskStatusChange}
+              handleRemoveClick={handleRemoveTask}
             />
           ))}
         </div>
@@ -74,7 +90,8 @@ const Tasks = () => {
             <TaskItem
               key={task.id}
               task={task}
-              handleTaskStatusChange={handleTaskStatusChange}
+              handleStatusChange={handleTaskStatusChange}
+              handleRemoveClick={handleRemoveTask}
             />
           ))}
         </div>
@@ -85,7 +102,8 @@ const Tasks = () => {
             <TaskItem
               key={task.id}
               task={task}
-              handleTaskStatusChange={handleTaskStatusChange}
+              handleStatusChange={handleTaskStatusChange}
+              handleRemoveClick={handleRemoveTask}
             />
           ))}
         </div>
