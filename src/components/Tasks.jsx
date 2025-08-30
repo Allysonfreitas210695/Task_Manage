@@ -1,17 +1,17 @@
 import { useState } from "react"
-
-import Button from "./Button"
-import TasksSeparator from "./TasksSeparator"
-
-import { TASKS } from "../constants/tasks"
-
-import AddIcon from "../assets/icons/add.svg?react"
-import TrashIcon from "../assets/icons/trash.svg?react"
-import SunIcon from "../assets/icons/sun.svg?react"
-import MoonIcon from "../assets/icons/moon.svg?react"
-import CloudIcon from "../assets/icons/cloud-sun.svg?react"
-import TaskItem from "./TaskItem"
 import { toast } from "sonner"
+
+import {
+  AddIcon,
+  CloudSunIcon,
+  MoonIcon,
+  SunIcon,
+  TrashIcon,
+} from "../assets/icons"
+import { TASKS } from "../constants/tasks"
+import Button from "./Button"
+import TaskItem from "./TaskItem"
+import TasksSeparator from "./TasksSeparator"
 
 const Tasks = () => {
   const [tasks, setTasks] = useState(TASKS)
@@ -85,7 +85,7 @@ const Tasks = () => {
         </div>
 
         <div className="my-6 space-y-3">
-          <TasksSeparator title={"Tarde"} icon={<CloudIcon />} />
+          <TasksSeparator title={"Tarde"} icon={<CloudSunIcon />} />
           {afternoonTasks.map((task) => (
             <TaskItem
               key={task.id}
