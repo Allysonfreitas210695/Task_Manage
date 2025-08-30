@@ -13,14 +13,28 @@ import CloudIcon from "../assets/icons/cloud-sun.svg?react"
 import TaskItem from "./TaskItem"
 
 const Tasks = () => {
-  const [tasks] = useState(TASKS)
+  const [tasks, setTasks] = useState(TASKS)
 
   const morningTasks = tasks.filter((task) => task.time === "morning")
   const afternoonTasks = tasks.filter((task) => task.time === "afternoon")
   const eveningTasks = tasks.filter((task) => task.time === "evening")
 
+  function handleTaskStatusChange(taskId) {
+    setTasks((prevTasks) =>
+      prevTasks.map((task) => {
+        if (task.id !== taskId) return task
+
+        let newStatus = "not_started"
+        if (task.status === "not_started") newStatus = "in_progress"
+        else if (task.status === "in_progress") newStatus = "done"
+
+        return { ...task, status: newStatus }
+      })
+    )
+  }
+
   return (
-    <div className="w-full px-[34px] py-16">
+    <div className="w-full space-y-6 px-[34px] py-16">
       <div className="flex w-full justify-between">
         <div>
           <span className="text-xs font-semibold text-[#00ADB5]">
@@ -46,21 +60,33 @@ const Tasks = () => {
         <div className="space-y-3">
           <TasksSeparator title={"Manhã"} icon={<SunIcon />} />
           {morningTasks.map((task) => (
-            <TaskItem key={task.id} task={task} />
+            <TaskItem
+              key={task.id}
+              task={task}
+              handleTaskStatusChange={handleTaskStatusChange}
+            />
           ))}
         </div>
 
         <div className="my-6 space-y-3">
           <TasksSeparator title={"Tarde"} icon={<CloudIcon />} />
           {afternoonTasks.map((task) => (
-            <TaskItem key={task.id} task={task} />
+            <TaskItem
+              key={task.id}
+              task={task}
+              handleTaskStatusChange={handleTaskStatusChange}
+            />
           ))}
         </div>
 
         <div className="space-y-3">
           <TasksSeparator title={"Noite"} icon={<MoonIcon />} />
           {eveningTasks.map((task) => (
-            <TaskItem key={task.id} task={task} />
+            <TaskItem
+              key={task.id}
+              task={task}
+              handleTaskStatusChange={handleTaskStatusChange}
+            />
           ))}
         </div>
       </div>
