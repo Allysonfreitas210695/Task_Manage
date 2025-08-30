@@ -1,5 +1,13 @@
+import SideBar from "./components/Sidebar"
+import Tasks from "./components/Tasks"
+
 const App = () => {
-  return <h1 class="font-sans text-3xl text-red-400"> Hello world! </h1>
+  return (
+    <div className="flex gap-2">
+      <SideBar />
+      <Tasks />
+    </div>
+  )
 }
 
 export default App

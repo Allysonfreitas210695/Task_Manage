@@ -136,5 +136,6 @@
 @layer base {
   html {
     font-family: var(--font-sans);
+    background-color: #f8f8f8;
   }
 }
