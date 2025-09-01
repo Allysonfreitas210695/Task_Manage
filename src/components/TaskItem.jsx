@@ -3,11 +3,11 @@ import Button from "./Button"
 
 const TaskItem = ({ task, handleStatusChange, handleRemoveClick }) => {
   const variantTaskColor = {
-    done: "bg-[#00ADB5]/10 text-[#00ADB5]",
-    in_progress: "bg-[#FFAA04]/10 text-[#FFAA04]",
-    not_started: "bg-[#35383E]/10 text-[#35383E]",
+    done: "bg-brand-primary/10 text-brand-primary",
+    in_progress: "bg-brand-process/10 text-brand-process",
+    not_started: "bg-brand-dark-blue/10 text-brand-dark-blue",
   }
-  console.log(task)
+
   return (
     <div
       className={`flex w-full items-center justify-between gap-2 rounded-lg px-4 py-3 text-sm transition ${variantTaskColor[task.status]}`}
@@ -26,15 +26,15 @@ const TaskItem = ({ task, handleStatusChange, handleRemoveClick }) => {
           />
           {task.status === "done" && <CheckIcon />}
           {task.status === "in_progress" && (
-            <LoaderIcon className="animate-spin" />
+            <LoaderIcon className="text-brand-white animate-spin" />
           )}
         </label>
         {task.title}
       </div>
 
       <div className="flex items-center gap-2">
-        <Button variant="ghost" onClick={() => handleRemoveClick(task.id)}>
-          <TrashIcon className={"text-[#9A9C9F]"} />
+        <Button color="ghost" onClick={() => handleRemoveClick(task.id)}>
+          <TrashIcon className={"text-brand-text-gray"} />
         </Button>
         <a href="#" className="transition-colors hover:opacity-75">
           <DetailsIcon />
