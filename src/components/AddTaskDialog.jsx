@@ -2,7 +2,10 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import PropTypes from "prop-types"
 import { createPortal } from "react-dom"
 import { useForm } from "react-hook-form"
+import { toast } from "sonner"
 
+import { LoaderIcon } from "../assets/icons"
+import { useCreateTask } from "../hooks/mutation/create-task"
 import { taskSchema } from "../types/taskSchema"
 import Button from "./Button"
 import Input from "./Input"
@@ -12,6 +15,7 @@ const AddTaskDialog = ({ isOpen, handleClose }) => {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
+    reset,
   } = useForm({
     resolver: zodResolver(taskSchema),
     defaultValues: {
@@ -21,7 +25,30 @@ const AddTaskDialog = ({ isOpen, handleClose }) => {
     },
   })
 
+  const createTaskMutation = useCreateTask()
+
   if (!isOpen) return null
+
+  function handleCancel() {
+    reset()
+    handleClose()
+  }
+
+  function onSubmit(data) {
+    createTaskMutation.mutate(
+      { ...data, status: "not_started" },
+      {
+        onSuccess: () => {
+          toast.success("Tarefa adicionada com sucesso!")
+          reset()
+          handleClose()
+        },
+        onError: (err) => {
+          toast.error(err.message)
+        },
+      }
+    )
+  }
 
   return createPortal(
     <div className="fixed inset-0 flex h-screen w-screen items-center justify-center backdrop-blur-xs">
@@ -33,10 +60,7 @@ const AddTaskDialog = ({ isOpen, handleClose }) => {
           Insira as informações abaixo
         </p>
 
-        <form
-          onSubmit={handleSubmit((d) => console.log(d))}
-          className="space-y-3"
-        >
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
           <Input
             label="Título"
             id="title"
@@ -63,7 +87,7 @@ const AddTaskDialog = ({ isOpen, handleClose }) => {
               size="large"
               className="w-full"
               color="secondary"
-              onClick={handleClose}
+              onClick={handleCancel}
               type="button"
             >
               Cancelar
@@ -71,10 +95,12 @@ const AddTaskDialog = ({ isOpen, handleClose }) => {
             <Button
               size="large"
               className="w-full"
-              disabled={isSubmitting}
+              disabled={isSubmitting || createTaskMutation.isLoading}
               type="submit"
             >
-              {/* {isSubmitting && <LoaderIcon className="animate-spin" />} */}
+              {(isSubmitting || createTaskMutation.isLoading) && (
+                <LoaderIcon className="animate-spin" />
+              )}
               Salvar
             </Button>
           </div>

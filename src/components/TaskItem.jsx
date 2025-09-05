@@ -1,11 +1,38 @@
+import { toast } from "sonner"
+
 import { CheckIcon, DetailsIcon, LoaderIcon, TrashIcon } from "../assets/icons"
+import { useRemoveTask } from "../hooks/mutation/remove-task"
+import { useUpdateTaskStatus } from "../hooks/mutation/update-task-status"
 import Button from "./Button"
 
-const TaskItem = ({ task, handleStatusChange, handleRemoveClick }) => {
+const TaskItem = ({ task }) => {
   const variantTaskColor = {
     done: "bg-brand-primary/10 text-brand-primary",
     in_progress: "bg-brand-process/10 text-brand-process",
     not_started: "bg-brand-dark-blue/10 text-brand-dark-blue",
+  }
+
+  const updateStatusMutation = useUpdateTaskStatus()
+
+  const removeTaskMutation = useRemoveTask()
+
+  function handleStatusChange(taskId) {
+    let newStatus = "not_started"
+    if (task.status === "not_started") {
+      toast.success("Tarefa iniciada!")
+      newStatus = "in_progress"
+    } else if (task.status === "in_progress") {
+      toast.success("Tarefa concluída!")
+      newStatus = "done"
+    } else {
+      toast.success("Tarefa Pendente!")
+    }
+    updateStatusMutation.mutate({ taskId, newStatus })
+  }
+
+  function handleRemoveClick(taskId) {
+    toast.success("Tarefa removida!")
+    removeTaskMutation.mutate(taskId)
   }
 
   return (
