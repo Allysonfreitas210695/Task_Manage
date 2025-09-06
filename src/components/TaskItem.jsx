@@ -1,3 +1,4 @@
+import { Link } from "react-router"
 import { toast } from "sonner"
 
 import { CheckIcon, DetailsIcon, LoaderIcon, TrashIcon } from "../assets/icons"
@@ -63,9 +64,12 @@ const TaskItem = ({ task }) => {
         <Button color="ghost" onClick={() => handleRemoveClick(task.id)}>
           <TrashIcon className={"text-brand-text-gray"} />
         </Button>
-        <a href="#" className="transition-colors hover:opacity-75">
+        <Link
+          to={`/detail-task/${task.id}`}
+          className="transition-colors hover:opacity-75"
+        >
           <DetailsIcon />
-        </a>
+        </Link>
       </div>
     </div>
   )

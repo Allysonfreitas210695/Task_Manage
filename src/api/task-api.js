@@ -1,5 +1,17 @@
 import { api } from "../lib/axios"
 
+export async function getTask(taskId) {
+  try {
+    return await api.get(`/tasks/${taskId}`)
+  } catch (error) {
+    if (error.response) {
+      throw new Error(error.response.data?.message || "Erro ao criar tarefa")
+    }
+
+    throw new Error("Erro de conexão com o servidor")
+  }
+}
+
 export async function createTask(newTask) {
   try {
     const { data } = await api.post("/tasks", newTask)
@@ -13,10 +25,23 @@ export async function createTask(newTask) {
   }
 }
 
+export async function updateTask(task) {
+  try {
+    const { data } = await api.put(`/tasks/${task.id}`, task)
+    return data
+  } catch (error) {
+    if (error.response) {
+      throw new Error(
+        error.response.data?.message || "Erro ao atualizar tarefa"
+      )
+    }
+    throw new Error("Erro de conexão com o servidor")
+  }
+}
+
 export async function removeTask(taskId) {
   try {
-    const { data } = await api.delete(`/tasks/${taskId}`)
-    return data
+    await api.delete(`/tasks/${taskId}`)
   } catch (error) {
     if (error.response) {
       throw new Error(
