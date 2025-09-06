@@ -132,6 +132,7 @@
 @theme {
   --font-sans: "Poppins", ui-sans-serif, system-ui, sans-serif;
 
+  --color-brand-light-blue: #e6f7f8;
   --color-brand-dark-blue: #35383e;
   --color-brand-primary: #00adb5;
   --color-brand-dark-gray: #818181;

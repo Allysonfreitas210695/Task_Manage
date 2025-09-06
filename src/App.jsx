@@ -1,7 +1,8 @@
+import { RouterProvider } from "react-router"
 import { Toaster } from "sonner"
 
 import SideBar from "./components/Sidebar"
-import Tasks from "./components/Tasks"
+import { routers } from "./routes/index.route"
 
 const App = () => {
   return (
@@ -13,9 +14,8 @@ const App = () => {
           },
         }}
       />
-      <SideBar />
       <div className="h-full flex-1 overflow-y-auto">
-        <Tasks />
+        <RouterProvider router={routers} />
       </div>
     </div>
   )
