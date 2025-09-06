@@ -9,7 +9,7 @@ export const useRemoveAllTasks = (tasks) => {
 
   return useMutation({
     mutationKey: taskMutationKeys.deleteAll(tasks),
-    mutationFn: () => removeAllTasks(tasks),
+    mutationFn: async () => await removeAllTasks(tasks),
     onSuccess: () => {
       queryClient.setQueryData(taskQueryKeys.getAll(), [])
     },

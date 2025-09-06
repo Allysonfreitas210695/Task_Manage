@@ -9,7 +9,7 @@ export const useRemoveTask = (taskId) => {
 
   return useMutation({
     mutationKey: taskMutationKeys.delete(taskId),
-    mutationFn: () => removeTask(taskId),
+    mutationFn: async () => await removeTask(taskId),
     onSuccess: () => {
       queryClient.setQueryData(taskQueryKeys.getAll(), (old) =>
         old.filter((task) => task.id !== taskId)

@@ -9,7 +9,8 @@ export const useUpdateTaskStatus = (taskId) => {
 
   return useMutation({
     mutationKey: taskMutationKeys.update(taskId),
-    mutationFn: ({ newStatus }) => updateTaskStatus(taskId, newStatus),
+    mutationFn: async ({ newStatus }) =>
+      await updateTaskStatus(taskId, newStatus),
     onSuccess: (_, variables) => {
       queryClient.setQueryData(taskQueryKeys.getAll(), (old = []) =>
         old.map((task) =>

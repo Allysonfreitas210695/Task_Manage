@@ -9,7 +9,7 @@ export const useCreateTask = () => {
 
   return useMutation({
     mutationKey: taskMutationKeys.create(),
-    mutationFn: (newTask) => createTask(newTask),
+    mutationFn: async (newTask) => await createTask(newTask),
     onSuccess: (data) => {
       queryClient.setQueryData(taskQueryKeys.getAll(), (old = []) => [
         ...old,
