@@ -12,11 +12,11 @@ const TaskItem = ({ task }) => {
     not_started: "bg-brand-dark-blue/10 text-brand-dark-blue",
   }
 
-  const updateStatusMutation = useUpdateTaskStatus()
+  const updateStatusMutation = useUpdateTaskStatus(task.id)
 
-  const removeTaskMutation = useRemoveTask()
+  const removeTaskMutation = useRemoveTask(task.id)
 
-  function handleStatusChange(taskId) {
+  function handleStatusChange() {
     let newStatus = "not_started"
     if (task.status === "not_started") {
       toast.success("Tarefa iniciada!")
@@ -27,7 +27,7 @@ const TaskItem = ({ task }) => {
     } else {
       toast.success("Tarefa Pendente!")
     }
-    updateStatusMutation.mutate({ taskId, newStatus })
+    updateStatusMutation.mutate({ newStatus })
   }
 
   function handleRemoveClick(taskId) {

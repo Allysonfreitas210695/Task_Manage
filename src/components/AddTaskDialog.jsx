@@ -3,6 +3,7 @@ import PropTypes from "prop-types"
 import { createPortal } from "react-dom"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
+import { v4 as uuid } from "uuid"
 
 import { LoaderIcon } from "../assets/icons"
 import { useCreateTask } from "../hooks/mutation/create-task"
@@ -36,7 +37,7 @@ const AddTaskDialog = ({ isOpen, handleClose }) => {
 
   function onSubmit(data) {
     createTaskMutation.mutate(
-      { ...data, status: "not_started" },
+      { ...data, id: uuid(), status: "not_started" },
       {
         onSuccess: () => {
           toast.success("Tarefa adicionada com sucesso!")

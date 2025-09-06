@@ -10,11 +10,11 @@ import Button from "./Button"
 const Header = ({ title }) => {
   const [openAddTaskDialog, setOpenAddTaskDialog] = useState(false)
 
-  const removeAllTasksMutation = useRemoveAllTasks()
   const { data: tasks } = useGetTasks()
+  const removeAllTasksMutation = useRemoveAllTasks(tasks)
 
   function handleClearAll() {
-    removeAllTasksMutation.mutate(tasks, {
+    removeAllTasksMutation.mutate(undefined, {
       onSuccess: () => toast.success("Todas as tarefas foram removidas!"),
       onError: (err) => toast.error(err.message),
     })
