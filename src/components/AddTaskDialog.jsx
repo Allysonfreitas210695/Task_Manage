@@ -10,6 +10,7 @@ import { useCreateTask } from "../hooks/mutation/create-task"
 import { taskSchema } from "../types/taskSchema"
 import Button from "./Button"
 import Input from "./Input"
+import SelectTime from "./SelectTime"
 
 const AddTaskDialog = ({ isOpen, handleClose }) => {
   const {
@@ -69,12 +70,10 @@ const AddTaskDialog = ({ isOpen, handleClose }) => {
             errorMessage={errors.title?.message}
             {...register("title")}
           />
-          <Input
-            label="Horário"
-            id="time"
-            placeholder=""
-            errorMessage={errors.time?.message}
-            {...register("time")}
+          <SelectTime
+            disabled={isSubmitting}
+            errorMessage={errors?.time?.message}
+            {...register("time", { required: true })}
           />
           <Input
             label="Descrição"
