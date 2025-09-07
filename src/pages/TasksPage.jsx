@@ -21,6 +21,11 @@ const TasksPage = () => {
           {morningTasks?.map((task) => (
             <TaskItem key={task.id} task={task} />
           ))}
+          {morningTasks?.length === 0 && (
+            <p className="text-center text-sm text-gray-400">
+              Nenhuma tarefa para este período da manhã.
+            </p>
+          )}
         </div>
 
         <div className="my-6 space-y-3">
@@ -28,6 +33,11 @@ const TasksPage = () => {
           {afternoonTasks?.map((task) => (
             <TaskItem key={task.id} task={task} />
           ))}
+          {afternoonTasks?.length === 0 && (
+            <p className="text-center text-sm text-gray-400">
+              Nenhuma tarefa para este período da tarde.
+            </p>
+          )}
         </div>
 
         <div className="space-y-3">
@@ -35,6 +45,11 @@ const TasksPage = () => {
           {eveningTasks?.map((task) => (
             <TaskItem key={task.id} task={task} />
           ))}
+          {eveningTasks?.length === 0 && (
+            <p className="text-center text-sm text-gray-400">
+              Nenhuma tarefa para este período da noite.
+            </p>
+          )}
         </div>
       </div>
     </div>
